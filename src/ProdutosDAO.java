@@ -46,8 +46,28 @@ public class ProdutosDAO {
     }
     
     public ArrayList<ProdutosDTO> listarProdutos(){
+        String sql = "select * from produtos";
+        try{
+          prep = this.conn.prepareStatement(sql);  
+          resultset = prep.executeQuery();
+          
+          while(resultset.next()){
+              ProdutosDTO produtoAtual = new ProdutosDTO();
+              
+              produtoAtual.setId(resultset.getInt("id"));
+              produtoAtual.setNome(resultset.getString("nome"));
+              produtoAtual.setValor(resultset.getInt("valor"));
+              produtoAtual.setStatus(resultset.getString("status"));
+              listagem.add(produtoAtual);
+          }
+          return listagem;
+          
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Falha ao listar os produtos.");
+            return null;
+        }
         
-        return listagem;
+     
     }
     
     
