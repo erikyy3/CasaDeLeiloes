@@ -82,6 +82,29 @@ public class ProdutosDAO {
           JOptionPane.showMessageDialog(null, "Falha ao atualizar venda");
       }
     }
+    
+    public ArrayList<ProdutosDTO> listarProdutosVendidos(){
+        String sql = "select * from produtos where status = 'Vendido'";
+        ArrayList produtosVendidos = new ArrayList();
+        try{
+            prep = this.conn.prepareStatement(sql);
+            resultset = prep.executeQuery();
+            
+            while(resultset.next()){
+                ProdutosDTO produtoAtual = new ProdutosDTO();
+                
+                produtoAtual.setId(resultset.getInt("id"));
+                produtoAtual.setNome(resultset.getString("nome"));
+                produtoAtual.setValor(resultset.getInt("valor"));
+                produtoAtual.setStatus(resultset.getString("status"));
+                produtosVendidos.add(produtoAtual);
+            }
+            
+            return produtosVendidos;
+        }catch(Exception ex){
+            return null;
+                    }
+    }
         
 }
 
