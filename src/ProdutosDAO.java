@@ -70,8 +70,18 @@ public class ProdutosDAO {
      
     }
     
-    
-    
+    public void venderProduto(int id){
+      String sql = "update produtos set status = 'Vendido' where id = ?";
+      
+      try{
+          prep = this.conn.prepareStatement(sql);
+          prep.setInt(1, id);
+          prep.executeUpdate();
+          
+      }catch(Exception ex){
+          JOptionPane.showMessageDialog(null, "Falha ao atualizar venda");
+      }
+    }
         
 }
 
